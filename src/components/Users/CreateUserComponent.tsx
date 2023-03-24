@@ -1,9 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { postUserApi } from '../../services/api.users';
 
 function CreateUserComponent() {
+  const queryClient = useQueryClient();
   const [infoMessage, setInfoMessage] = useState('');
   const {
     register,
@@ -15,6 +16,7 @@ function CreateUserComponent() {
     mutationFn: postUserApi,
     onSuccess: (data, variables, context) => {
       setInfoMessage('User created');
+      queryClient.refetchQueries(['users']);
     },
     onError: ({ response }) => {
       setInfoMessage(response.data.message);

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { getAccountsApi } from '../../services/api.account';
@@ -6,6 +6,7 @@ import { postAssignationApi } from '../../services/api.assignations';
 import { getUsersApi } from '../../services/api.users';
 
 function CreateAssignationComponent() {
+  const queryClient = useQueryClient();
   const [infoMessage, setInfoMessage] = useState('');
   const {
     register,
@@ -24,11 +25,12 @@ function CreateAssignationComponent() {
   });
 
   const { mutate, isLoading, isError, isSuccess } = useMutation(
-    ['assignation'],
+    ['assignations'],
     {
       mutationFn: postAssignationApi,
       onSuccess: (data, variables, context) => {
         setInfoMessage('Assignation registered');
+        queryClient.refetchQueries(['assignations']);
       },
       onError: ({ response }) => {
         setInfoMessage(response.data.message);

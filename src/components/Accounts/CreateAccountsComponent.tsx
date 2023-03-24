@@ -24,10 +24,11 @@ function CreateUserComponent() {
     queryFn: () => getClientsApi(100, 0),
   });
 
-  const { mutate, isLoading, isError, isSuccess } = useMutation(['user'], {
+  const { mutate, isLoading, isError, isSuccess } = useMutation(['accounts'], {
     mutationFn: postAccountApi,
     onSuccess: (data, variables, context) => {
-      setInfoMessage('User created');
+      setInfoMessage('Account created');
+      queryClient.refetchQueries(['accounts']);
     },
     onError: ({ response }) => {
       setInfoMessage(response.data.message);
