@@ -13,7 +13,7 @@ export const routes: HeaderLink[] = [
 ];
 
 export const headerRoutes: HeaderLink[] = [
-  { name: 'Home', path: '/' },
+  { name: 'Assignations', path: '/' },
   { name: 'Users', path: '/users' },
   { name: 'Accounts', path: '/accounts' },
   { name: 'Clients', path: '/clients' },
